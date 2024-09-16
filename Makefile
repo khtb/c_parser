@@ -13,7 +13,6 @@
 ##############################################################
 
 
-
 # Variables for listing C and C++ source files
 SRC_DIR := src
 OBJ_DIR := obj
@@ -28,7 +27,7 @@ H_FILES := $(wildcard $(SRC_DIR)/**/*.h)
 INCLUDE_DIRS := $(sort $(dir $(H_FILES)))
 
 # Convert include directories into -I flags
-INCLUDES := $(addprefix -I,$(INCLUDE_DIRS))
+INCLUDES := $(addprefix -I ,$(INCLUDE_DIRS))
 
 
 # Derive the corresponding object file paths inside the obj/ directory
@@ -61,12 +60,12 @@ $(CPP_BIN): $(CPP_OBJS)
 # Rule for building C object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -I $(INC_FILES) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 # Rule for building C++ object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(dir $@)
-	$(CXX) $(CPPFLAGS) -I $(INC_FILES) -c $< -o $@
+	$(CXX) $(CPPFLAGS) $(INCLUDES) -c $< -o $@
 
 # Target for listing the C and C++ files
 list:
