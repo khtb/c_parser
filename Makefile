@@ -37,7 +37,7 @@ CPP_OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(CPP_FILES))
 # Define two different sets of CFLAGS and CPPFLAGS
 CFLAGS := -O2 -Wall
 
-CPPFLAGS := -O2 -std=c++11
+CPPFLAGS := -O2 -g -std=c++11
 
 # Compiler and linker
 CC := gcc

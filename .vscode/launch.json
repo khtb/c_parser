@@ -9,7 +9,7 @@
       "stopAtEntry": false,
       "externalConsole": false,
       "cwd": "/home/khtb/workset/c_parser",
-      "program": "/home/khtb/workset/c_parser/build/Debug/outDebug",
+      "program": "/home/khtb/workset/c_parser/program_cpp",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
