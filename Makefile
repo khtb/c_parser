@@ -15,11 +15,21 @@
 
 
 # Variables for listing C and C++ source files
-SRC_DIR := .
+SRC_DIR := src
 OBJ_DIR := obj
 
 C_FILES := $(wildcard $(SRC_DIR)/**/*.c)
 CPP_FILES := $(wildcard $(SRC_DIR)/**/*.cpp)
+
+# Generate a list of header files
+H_FILES := $(wildcard $(SRC_DIR)/**/*.h)
+
+# Generate include directories from header file paths
+INCLUDE_DIRS := $(sort $(dir $(H_FILES)))
+
+# Convert include directories into -I flags
+INCLUDES := $(addprefix -I,$(INCLUDE_DIRS))
+
 
 # Derive the corresponding object file paths inside the obj/ directory
 C_OBJS := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(C_FILES))
@@ -51,18 +61,20 @@ $(CPP_BIN): $(CPP_OBJS)
 # Rule for building C object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -I $(INC_FILES) -c $< -o $@
 
 # Rule for building C++ object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(dir $@)
-	$(CXX) $(CPPFLAGS) -c $< -o $@
+	$(CXX) $(CPPFLAGS) -I $(INC_FILES) -c $< -o $@
 
 # Target for listing the C and C++ files
 list:
 	@echo "C source files: $(C_FILES)"
 	@echo "C++ source files: $(CPP_FILES)"
 	@echo "C++ obj files: $(CPP_OBJS)"
+	@echo "C++ h files: $(INCLUDES)"
+	@echo "C++ h files: $(H_FILES)"
 
 # Clean up build files
 clean:
