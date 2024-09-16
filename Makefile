@@ -1,9 +1,10 @@
 ##############################################################
-#	| | _| |__ | |_| |__  
-#	| |/ / '_ \| __| '_ \ 
-#	|   <| | | | |_| |_) |
-#	|_|\_\_| |_|\__|_.__/ 
-#	                     
+#		 _    _     _   _     
+#		| | _| |__ | |_| |__  
+#		| |/ / '_ \| __| '_ \ 
+#		|   <| | | | |_| |_) |
+#		|_|\_\_| |_|\__|_.__/ 
+#	 	                    
 ##############################################################
 # Makefile
 # Author: Khattab	
@@ -12,45 +13,59 @@
 ##############################################################
 
 
-# Compiler
-CC = g++
 
-# Compiler flags
-CFLAGS = -Wall -g -std=c++17
-LINK_FLAGS =
-SRC_DIR := src
-OBJS_DIR := obj
+# Variables for listing C and C++ source files
+SRC_DIR := .
+OBJ_DIR := obj
 
-# Target executable
-TARGET = $(OBJS_DIR)/my_program
+C_FILES := $(wildcard $(SRC_DIR)/**/*.c)
+CPP_FILES := $(wildcard $(SRC_DIR)/**/*.cpp)
 
-# Source files
-CPP_FILES:=$(wildcard **/*.cpp)
-C_FILES := $(wildcard *.cpp)
+# Derive the corresponding object file paths inside the obj/ directory
+C_OBJS := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(C_FILES))
+CPP_OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(CPP_FILES))
 
-# Object files
-CPP_OBJS := $(patsubst %.cpp, $(OBJS_DIR)/%.o, $(CPP_FILES))
+# Define two different sets of CFLAGS and CPPFLAGS
+CFLAGS := -O2 -Wall
 
-info:
-	@echo "SRCS: $(CPP_FILES)"
-	@echo "OBJS: $(CPP_OBJS)"
-	@echo $(C_FILES)
+CPPFLAGS := -O2 -std=c++11
 
-# Default target
-all: $(TARGET)
+# Compiler and linker
+CC := gcc
+CXX := g++
 
-# Link object files to create the executable
-$(TARGET): $(CPP_OBJS)
-	$(CC) $(LINK_FLAGS) -o $(TARGET) $(OBJS)
+# Output binary names
+C_BIN := program_c
+CPP_BIN := program_cpp
 
-# Compile source files to object files
-$(OBJS_DIR)/%.o: $(SRC_DIR)/%.cpp
+# Targets for compiling C files with different CFLAGS
+$(C_BIN): $(C_OBJS)
+	$(CC) $(CFLAGS) -o $(C_BIN) $(C_OBJS)
+
+
+# Targets for compiling C++ files with different CPPFLAGS
+$(CPP_BIN): $(CPP_OBJS)
+	$(CXX) $(CPPFLAGS) -o $(CPP_BIN) $(CPP_OBJS)
+
+
+# Rule for building C object files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# Rule for building C++ object files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) $(CPPFLAGS) -c $< -o $@
+
+# Target for listing the C and C++ files
+list:
+	@echo "C source files: $(C_FILES)"
+	@echo "C++ source files: $(CPP_FILES)"
+	@echo "C++ obj files: $(CPP_OBJS)"
+
 # Clean up build files
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -rf $(OBJ_DIR) $(C_BIN) $(CPP_BIN)
 
-# Phony targets
-.PHONY: all clean
+all: $(CPP_BIN)
