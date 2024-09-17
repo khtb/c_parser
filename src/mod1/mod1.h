@@ -7,6 +7,7 @@ public:
 	void callPrintMessage();
 private:
 	void printMessage();
+	int value;
 };
 
 #endif // MOD1_H

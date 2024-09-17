@@ -17,7 +17,23 @@
 SRC_DIR := src
 OBJ_DIR := obj
 
-C_FILES := $(wildcard $(SRC_DIR)/**/*.c)
+
+# Compiler and linker
+CC := gcc
+CXX := g++
+AR := ar
+
+
+#define librarires
+LIBS := spdlog
+LIB1_CXX_FLG :=-O2 -g -std=c++11 -DSPDLOG_COMPILED_LIB
+LIB1_DIR:= libs/spdlog/src
+LIB1_SRC:= $(wildcard $(LIB1_DIR)/*.cpp)
+LIB1_INC:= libs/spdlog/include
+LIB1_OBJ := $(patsubst $(LIB1_DIR)/%.cpp, $(OBJ_DIR)/$(LIB1_DIR)/%.o, $(LIB1_SRC))
+
+
+# Project source files
 CPP_FILES := $(wildcard $(SRC_DIR)/**/*.cpp)
 
 # Generate a list of header files
@@ -27,25 +43,24 @@ H_FILES := $(wildcard $(SRC_DIR)/**/*.h)
 INCLUDE_DIRS := $(sort $(dir $(H_FILES)))
 
 # Convert include directories into -I flags
-INCLUDES := $(addprefix -I ,$(INCLUDE_DIRS))
+INCLUDES := $(addprefix -I ,$(INCLUDE_DIRS)) -I $(LIB1_INC)
 
 
 # Derive the corresponding object file paths inside the obj/ directory
-C_OBJS := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(C_FILES))
 CPP_OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(CPP_FILES))
 
 # Define two different sets of CFLAGS and CPPFLAGS
-CFLAGS := -O2 -Wall
-
 CPPFLAGS := -O2 -g -std=c++11
 
-# Compiler and linker
-CC := gcc
-CXX := g++
-
 # Output binary names
-C_BIN := program_c
 CPP_BIN := program_cpp
+
+STATIC_LIB1 := $(OBJ_DIR)/lib1.a
+
+# Compile and archive libraries
+$(STATIC_LIB1): $(LIB1_OBJ)
+	@mkdir -p $(dir $@)
+	$(AR) rcs $@ $(LIB1_OBJ)
 
 # Targets for compiling C files with different CFLAGS
 $(C_BIN): $(C_OBJS)
@@ -53,17 +68,21 @@ $(C_BIN): $(C_OBJS)
 
 
 # Targets for compiling C++ files with different CPPFLAGS
-$(CPP_BIN): $(CPP_OBJS)
+$(CPP_BIN): $(CPP_OBJS) $(STATIC_LIB1)
+	@echo *** Linking ***
 	$(CXX) $(CPPFLAGS) -o $(CPP_BIN) $(CPP_OBJS)
 
 
-# Rule for building C object files
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+# Pattern rule for compiling library object files
+$(OBJ_DIR)/$(LIB1_DIR)/%.o: $(LIB1_DIR)/%.cpp $(LIB1_INC)
+	@echo Compiling: $<
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(CXX) $(LIB1_CXX_FLG) $(addprefix -I,$(LIB1_INC)) -c $< -o $@
+
 
 # Rule for building C++ object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@echo Compiling: $<
 	@mkdir -p $(dir $@)
 	$(CXX) $(CPPFLAGS) $(INCLUDES) -c $< -o $@
 
@@ -72,8 +91,10 @@ list:
 	@echo "C source files: $(C_FILES)"
 	@echo "C++ source files: $(CPP_FILES)"
 	@echo "C++ obj files: $(CPP_OBJS)"
-	@echo "C++ h files: $(INCLUDES)"
+	@echo "C++ h include folders: $(INCLUDES)"
 	@echo "C++ h files: $(H_FILES)"
+	@echo "lib1 src : $(LIB1_SRC)"
+	@echo "lib1 objs : $(LIB1_OBJ)"
 
 # Clean up build files
 clean:
