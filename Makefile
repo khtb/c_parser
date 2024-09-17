@@ -55,12 +55,6 @@ CPPFLAGS := -O2 -g -std=c++11
 # Output binary names
 CPP_BIN := program_cpp
 
-STATIC_LIB1 := $(OBJ_DIR)/lib1.a
-
-# Compile and archive libraries
-$(STATIC_LIB1): $(LIB1_OBJ)
-	@mkdir -p $(dir $@)
-	$(AR) rcs $@ $(LIB1_OBJ)
 
 # Targets for compiling C files with different CFLAGS
 $(C_BIN): $(C_OBJS)
@@ -68,9 +62,9 @@ $(C_BIN): $(C_OBJS)
 
 
 # Targets for compiling C++ files with different CPPFLAGS
-$(CPP_BIN): $(CPP_OBJS) $(STATIC_LIB1)
+$(CPP_BIN): $(CPP_OBJS) $(LIB1_OBJ)
 	@echo *** Linking ***
-	$(CXX) $(CPPFLAGS) -o $(CPP_BIN) $(CPP_OBJS)
+	$(CXX) $(CPPFLAGS) -o $(CPP_BIN) $(CPP_OBJS) $(LIB1_OBJ)
 
 
 # Pattern rule for compiling library object files
