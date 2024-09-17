@@ -32,15 +32,18 @@ LIB1_SRC:= $(wildcard $(LIB1_DIR)/*.cpp)
 LIB1_INC:= libs/spdlog/include
 LIB1_OBJ := $(patsubst $(LIB1_DIR)/%.cpp, $(OBJ_DIR)/$(LIB1_DIR)/%.o, $(LIB1_SRC))
 
+LIBS_OBJS = $(LIB1_OBJ)
 
 # Project source files
 CPP_FILES := $(wildcard $(SRC_DIR)/**/*.cpp)
+
+DEPS := $(CPP_FILES:.cpp=.d)
 
 # Generate a list of header files
 H_FILES := $(wildcard $(SRC_DIR)/**/*.h)
 
 # Generate include directories from header file paths
-INCLUDE_DIRS := $(sort $(dir $(H_FILES)))
+INCLUDE_DIRS := $(dir $(H_FILES))
 
 # Convert include directories into -I flags
 INCLUDES := $(addprefix -I ,$(INCLUDE_DIRS)) -I $(LIB1_INC)
@@ -49,8 +52,8 @@ INCLUDES := $(addprefix -I ,$(INCLUDE_DIRS)) -I $(LIB1_INC)
 # Derive the corresponding object file paths inside the obj/ directory
 CPP_OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(CPP_FILES))
 
-# Define two different sets of CFLAGS and CPPFLAGS
-CPPFLAGS := -O2 -g -std=c++11
+# Define two different sets of and CPPFLAGS
+CPPFLAGS := -O2 -g -std=c++11 -MMD 
 
 # Output binary names
 CPP_BIN := program_cpp
@@ -62,9 +65,9 @@ $(C_BIN): $(C_OBJS)
 
 
 # Targets for compiling C++ files with different CPPFLAGS
-$(CPP_BIN): $(CPP_OBJS) $(LIB1_OBJ)
+$(CPP_BIN): $(CPP_OBJS) $(LIBS_OBJS)
 	@echo *** Linking ***
-	$(CXX) $(CPPFLAGS) -o $(CPP_BIN) $(CPP_OBJS) $(LIB1_OBJ)
+	$(CXX) $(CPPFLAGS) -o $(CPP_BIN) $(CPP_OBJS) $(LIBS_OBJS)
 
 
 # Pattern rule for compiling library object files
@@ -73,6 +76,7 @@ $(OBJ_DIR)/$(LIB1_DIR)/%.o: $(LIB1_DIR)/%.cpp $(LIB1_INC)
 	@mkdir -p $(dir $@)
 	$(CXX) $(LIB1_CXX_FLG) $(addprefix -I,$(LIB1_INC)) -c $< -o $@
 
+-include $(DEPS)
 
 # Rule for building C++ object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
