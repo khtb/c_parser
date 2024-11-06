@@ -1,0 +1,13 @@
+# ninja log v5
+0	336	1730898255058360578	CMakeFiles/ParseCFile.dir/src/mod1/mod1.cpp.o	e8ae97e623bd584e
+0	413	1730898255148360884	CMakeFiles/ParseCFile.dir/src/mod2/mod2.cpp.o	cf0cfa58ea913a3b
+0	1117	1730898255848363263	CMakeFiles/ParseCFile.dir/src/main/main.cpp.o	b01c520d1167f902
+1	1411	1730898256138364248	libs/spdlog/CMakeFiles/spdlog.dir/src/cfg.cpp.o	336fb6b36eea1a39
+1	1639	1730898256368365030	libs/spdlog/CMakeFiles/spdlog.dir/src/file_sinks.cpp.o	8212acc4c61497cf
+1	2093	1730898256818366559	libs/spdlog/CMakeFiles/spdlog.dir/src/color_sinks.cpp.o	9457867446dbeb01
+1	2102	1730898256828366593	libs/spdlog/CMakeFiles/spdlog.dir/src/async.cpp.o	aefe40d5b14d3f57
+1	2110	1730898256838366627	libs/spdlog/CMakeFiles/spdlog.dir/src/stdout_sinks.cpp.o	606dbfc9bc6ba
+2	2595	1730898257328368292	libs/spdlog/CMakeFiles/spdlog.dir/src/bundled_fmtlib_format.cpp.o	4b54e247c16eaf2e
+0	6270	1730898260998380764	libs/spdlog/CMakeFiles/spdlog.dir/src/spdlog.cpp.o	736a38f1c2866160
+6270	6430	1730898261158381307	libs/spdlog/libspdlogd.a	aeb7cf48aea8759a
+6430	7030	1730898261758383346	ParseCFile	f46eb48232db2b8f

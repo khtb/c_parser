@@ -1,0 +1,1 @@
+/usr/bin/g++ -g -g -O0 CMakeFiles/ParseCFile.dir/src/main/main.cpp.o CMakeFiles/ParseCFile.dir/src/mod1/mod1.cpp.o CMakeFiles/ParseCFile.dir/src/mod2/mod2.cpp.o -o ParseCFile  -Wl,-rpath,/usr/lib/llvm-14/lib /usr/lib/llvm-14/lib/libclang.so libs/spdlog/libspdlogd.a 

@@ -1,24 +1,33 @@
 {
-  "version": "0.2.0",
   "configurations": [
-    {
-      "name": "C/C++ Runner: Debug Session",
-      "type": "cppdbg",
-      "request": "launch",
-      "args": [],
-      "stopAtEntry": false,
-      "externalConsole": false,
-      "cwd": "/home/khtb/workset/c_parser",
-      "program": "/home/khtb/workset/c_parser/program_cpp",
-      "MIMode": "gdb",
-      "miDebuggerPath": "gdb",
-      "setupCommands": [
+  {
+    "name": "(gdb) Launch",
+    "type": "cppdbg",
+    "request": "launch",
+    "program": "${workspaceFolder}/build/ParseCFile",
+    "args": [],
+    "stopAtEntry": false,
+    "cwd": "${workspaceFolder}",
+    "environment": [],
+    "externalConsole": false,
+    "MIMode": "gdb",
+    "setupCommands": [
         {
-          "description": "Enable pretty-printing for gdb",
-          "text": "-enable-pretty-printing",
-          "ignoreFailures": true
+            "description": "Enable pretty-printing for gdb",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+        },
+        {
+            "description": "Set Disassembly Flavor to Intel",
+            "text": "-gdb-set disassembly-flavor intel",
+            "ignoreFailures": true
         }
-      ]
-    }
+    ],
+    "miDebuggerPath": "/usr/bin/gdb",  // Ensure this is set to where your gdb is located
+    // "preLaunchTask": "build", // Optional: Ensure you have a build task to run before debugging
+    // "sourceFileMap": {
+        // "/path/to/your/source": "${workspaceFolder}"
+    // }
+  }
   ]
 }

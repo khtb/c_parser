@@ -37,7 +37,7 @@ LIBS_OBJS = $(LIB1_OBJ)
 # Project source files
 CPP_FILES := $(wildcard $(SRC_DIR)/**/*.cpp)
 
-DEPS := $(CPP_FILES:.cpp=.d)
+DEPS := $(CPP_FILES:.cpp=.d) 
 
 # Generate a list of header files
 H_FILES := $(wildcard $(SRC_DIR)/**/*.h)
@@ -46,7 +46,7 @@ H_FILES := $(wildcard $(SRC_DIR)/**/*.h)
 INCLUDE_DIRS := $(dir $(H_FILES))
 
 # Convert include directories into -I flags
-INCLUDES := $(addprefix -I ,$(INCLUDE_DIRS)) -I $(LIB1_INC)
+INCLUDES := $(addprefix -I ,$(INCLUDE_DIRS))  $(addprefix -I ,$(LIB1_INC))
 
 
 # Derive the corresponding object file paths inside the obj/ directory
@@ -74,7 +74,7 @@ $(CPP_BIN): $(CPP_OBJS) $(LIBS_OBJS)
 $(OBJ_DIR)/$(LIB1_DIR)/%.o: $(LIB1_DIR)/%.cpp $(LIB1_INC)
 	@echo Compiling: $<
 	@mkdir -p $(dir $@)
-	$(CXX) $(LIB1_CXX_FLG) $(addprefix -I,$(LIB1_INC)) -c $< -o $@
+	$(CXX) $(LIB1_CXX_FLG) $(INCLUDES) -c $< -o $@
 
 -include $(DEPS)
 
@@ -84,15 +84,6 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(CPPFLAGS) $(INCLUDES) -c $< -o $@
 
-# Target for listing the C and C++ files
-list:
-	@echo "C source files: $(C_FILES)"
-	@echo "C++ source files: $(CPP_FILES)"
-	@echo "C++ obj files: $(CPP_OBJS)"
-	@echo "C++ h include folders: $(INCLUDES)"
-	@echo "C++ h files: $(H_FILES)"
-	@echo "lib1 src : $(LIB1_SRC)"
-	@echo "lib1 objs : $(LIB1_OBJ)"
 
 # Clean up build files
 clean:

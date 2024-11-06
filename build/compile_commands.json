@@ -1,0 +1,52 @@
+[
+{
+  "directory": "/home/kht5fe/workset/c_parser/build",
+  "command": "/usr/bin/g++ -DSPDLOG_COMPILED_LIB -I/home/kht5fe/workset/c_parser/include -I/usr/lib/llvm-14/include -I/home/kht5fe/workset/c_parser/libs/spdlog/include -I/home/kht5fe/workset/c_parser/src/main -I/home/kht5fe/workset/c_parser/src/mod1 -I/home/kht5fe/workset/c_parser/src/mod2 -g -g -O0 -std=gnu++11 -o CMakeFiles/ParseCFile.dir/src/main/main.cpp.o -c /home/kht5fe/workset/c_parser/src/main/main.cpp",
+  "file": "/home/kht5fe/workset/c_parser/src/main/main.cpp"
+},
+{
+  "directory": "/home/kht5fe/workset/c_parser/build",
+  "command": "/usr/bin/g++ -DSPDLOG_COMPILED_LIB -I/home/kht5fe/workset/c_parser/include -I/usr/lib/llvm-14/include -I/home/kht5fe/workset/c_parser/libs/spdlog/include -I/home/kht5fe/workset/c_parser/src/main -I/home/kht5fe/workset/c_parser/src/mod1 -I/home/kht5fe/workset/c_parser/src/mod2 -g -g -O0 -std=gnu++11 -o CMakeFiles/ParseCFile.dir/src/mod1/mod1.cpp.o -c /home/kht5fe/workset/c_parser/src/mod1/mod1.cpp",
+  "file": "/home/kht5fe/workset/c_parser/src/mod1/mod1.cpp"
+},
+{
+  "directory": "/home/kht5fe/workset/c_parser/build",
+  "command": "/usr/bin/g++ -DSPDLOG_COMPILED_LIB -I/home/kht5fe/workset/c_parser/include -I/usr/lib/llvm-14/include -I/home/kht5fe/workset/c_parser/libs/spdlog/include -I/home/kht5fe/workset/c_parser/src/main -I/home/kht5fe/workset/c_parser/src/mod1 -I/home/kht5fe/workset/c_parser/src/mod2 -g -g -O0 -std=gnu++11 -o CMakeFiles/ParseCFile.dir/src/mod2/mod2.cpp.o -c /home/kht5fe/workset/c_parser/src/mod2/mod2.cpp",
+  "file": "/home/kht5fe/workset/c_parser/src/mod2/mod2.cpp"
+},
+{
+  "directory": "/home/kht5fe/workset/c_parser/build",
+  "command": "/usr/bin/g++ -DSPDLOG_COMPILED_LIB -I/home/kht5fe/workset/c_parser/libs/spdlog/include -g -g -O0 -std=c++11 -o libs/spdlog/CMakeFiles/spdlog.dir/src/spdlog.cpp.o -c /home/kht5fe/workset/c_parser/libs/spdlog/src/spdlog.cpp",
+  "file": "/home/kht5fe/workset/c_parser/libs/spdlog/src/spdlog.cpp"
+},
+{
+  "directory": "/home/kht5fe/workset/c_parser/build",
+  "command": "/usr/bin/g++ -DSPDLOG_COMPILED_LIB -I/home/kht5fe/workset/c_parser/libs/spdlog/include -g -g -O0 -std=c++11 -o libs/spdlog/CMakeFiles/spdlog.dir/src/stdout_sinks.cpp.o -c /home/kht5fe/workset/c_parser/libs/spdlog/src/stdout_sinks.cpp",
+  "file": "/home/kht5fe/workset/c_parser/libs/spdlog/src/stdout_sinks.cpp"
+},
+{
+  "directory": "/home/kht5fe/workset/c_parser/build",
+  "command": "/usr/bin/g++ -DSPDLOG_COMPILED_LIB -I/home/kht5fe/workset/c_parser/libs/spdlog/include -g -g -O0 -std=c++11 -o libs/spdlog/CMakeFiles/spdlog.dir/src/color_sinks.cpp.o -c /home/kht5fe/workset/c_parser/libs/spdlog/src/color_sinks.cpp",
+  "file": "/home/kht5fe/workset/c_parser/libs/spdlog/src/color_sinks.cpp"
+},
+{
+  "directory": "/home/kht5fe/workset/c_parser/build",
+  "command": "/usr/bin/g++ -DSPDLOG_COMPILED_LIB -I/home/kht5fe/workset/c_parser/libs/spdlog/include -g -g -O0 -std=c++11 -o libs/spdlog/CMakeFiles/spdlog.dir/src/file_sinks.cpp.o -c /home/kht5fe/workset/c_parser/libs/spdlog/src/file_sinks.cpp",
+  "file": "/home/kht5fe/workset/c_parser/libs/spdlog/src/file_sinks.cpp"
+},
+{
+  "directory": "/home/kht5fe/workset/c_parser/build",
+  "command": "/usr/bin/g++ -DSPDLOG_COMPILED_LIB -I/home/kht5fe/workset/c_parser/libs/spdlog/include -g -g -O0 -std=c++11 -o libs/spdlog/CMakeFiles/spdlog.dir/src/async.cpp.o -c /home/kht5fe/workset/c_parser/libs/spdlog/src/async.cpp",
+  "file": "/home/kht5fe/workset/c_parser/libs/spdlog/src/async.cpp"
+},
+{
+  "directory": "/home/kht5fe/workset/c_parser/build",
+  "command": "/usr/bin/g++ -DSPDLOG_COMPILED_LIB -I/home/kht5fe/workset/c_parser/libs/spdlog/include -g -g -O0 -std=c++11 -o libs/spdlog/CMakeFiles/spdlog.dir/src/cfg.cpp.o -c /home/kht5fe/workset/c_parser/libs/spdlog/src/cfg.cpp",
+  "file": "/home/kht5fe/workset/c_parser/libs/spdlog/src/cfg.cpp"
+},
+{
+  "directory": "/home/kht5fe/workset/c_parser/build",
+  "command": "/usr/bin/g++ -DSPDLOG_COMPILED_LIB -I/home/kht5fe/workset/c_parser/libs/spdlog/include -g -g -O0 -std=c++11 -o libs/spdlog/CMakeFiles/spdlog.dir/src/bundled_fmtlib_format.cpp.o -c /home/kht5fe/workset/c_parser/libs/spdlog/src/bundled_fmtlib_format.cpp",
+  "file": "/home/kht5fe/workset/c_parser/libs/spdlog/src/bundled_fmtlib_format.cpp"
+}
+]
