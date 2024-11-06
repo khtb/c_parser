@@ -1,5 +1,6 @@
 obj/main/main.o: src/main/main.cpp src/mod1/mod1.h src/mod2/mod2.h \
- libs/spdlog/include/spdlog/spdlog.h libs/spdlog/include/spdlog/common.h \
+ src/file/filescanner.h libs/spdlog/include/spdlog/spdlog.h \
+ libs/spdlog/include/spdlog/common.h \
  libs/spdlog/include/spdlog/details/null_mutex.h \
  libs/spdlog/include/spdlog/tweakme.h \
  libs/spdlog/include/spdlog/fmt/fmt.h \

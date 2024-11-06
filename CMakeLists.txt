@@ -29,6 +29,7 @@ file(GLOB_RECURSE PROJECT_SOURCES "${SOURCE_DIR}/*.cpp")
 add_subdirectory(${PROJECT_SOURCE_DIR}/src/main)
 add_subdirectory(${PROJECT_SOURCE_DIR}/src/mod1)
 add_subdirectory(${PROJECT_SOURCE_DIR}/src/mod2)
+add_subdirectory(${PROJECT_SOURCE_DIR}/src/file)
 add_subdirectory(${PROJECT_SOURCE_DIR}/libs/spdlog)
 
 # Add the executable
@@ -48,6 +49,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE /usr/lib/llvm-14/include/ ${P
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/main)
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/mod1)
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/mod2)
+target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/file)
 # target_include_directories(${PROJECT_NAME} PRIVATE )
 target_link_libraries(${PROJECT_NAME} PRIVATE /usr/lib/llvm-14/lib/libclang.so )
 target_link_libraries(${PROJECT_NAME} PRIVATE spdlog::spdlog)
