@@ -27,7 +27,7 @@
         {
             "type": "shell",
             "label": "cmake terminal",
-            "command": "make",
+            "command": "make -j$(nproc)",
             "args": [
 
             ],
@@ -50,7 +50,7 @@
             "args": [
 
             ],
-            "dependsOn": "cmake terminal"
+            "dependsOn": "cmake terminal",
             "options": {
                 "cwd": "${workspaceFolder}/build"
             },

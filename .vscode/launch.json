@@ -23,9 +23,9 @@
             "ignoreFailures": true
         }
     ],
-    "miDebuggerPath": "/usr/bin/gdb",  // Ensure this is set to where your gdb is located
-    // "preLaunchTask": "build", // Optional: Ensure you have a build task to run before debugging
-    // "sourceFileMap": {
+    "miDebuggerPath": "/usr/bin/gdb",  
+    "preLaunchTask": "cmake terminal"
+        // "sourceFileMap": {
         // "/path/to/your/source": "${workspaceFolder}"
     // }
   }
