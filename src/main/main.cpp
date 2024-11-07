@@ -12,7 +12,8 @@ int main() {
 	mod1[0].callPrintMessage();
 	spdlog::info("Welcome to spdlog!");
 	std::string fileName =  "main.cpp";
-	std::string dirPath = "/mnt/c/D_Drive/workset/EclipseProjects/ArmStm32F091/";
+	//std::string dirPath = "/mnt/c/D_Drive/workset/EclipseProjects/ArmStm32F091/";
+	std::string dirPath = "/home/khtb/workset/ArmStm32F091/";
 	// parseFile(fileName);
 	FileScanner scanner(dirPath);
 	x =	scanner.getFiles();
