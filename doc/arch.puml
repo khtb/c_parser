@@ -1,0 +1,34 @@
+@startuml
+package "CLI Tool" {
+    class "Command" {
+        +execute(argument: string)
+        +name(): string
+    }
+
+    class "PingCommand" {
+        +execute(argument: string)
+        +name(): string
+    }
+
+    class "SvdCommand" {
+        +execute(argument: string)
+        +name(): string
+    }
+
+    class "CommandHandler" {
+        +registerCommand(command: Command)
+        +executeCommand(command_name: string, argument: string)
+    }
+
+    class "SvdMode" {
+        +enterSvdMode()
+        +exitSvdMode()
+        +executeCommand(command: string)
+    }
+
+    Command <|-- PingCommand
+    Command <|-- SvdCommand
+    CommandHandler --> Command : manages
+    SvdMode --> CommandHandler : uses
+}
+@enduml
