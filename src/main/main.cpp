@@ -4,6 +4,7 @@
 #include "FileScanner.h"
 #include "spdlog/spdlog.h"
 #include <algorithm>
+#include "tinyxml2.h"
 
 using namespace std;
 

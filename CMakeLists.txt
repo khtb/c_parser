@@ -32,16 +32,24 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/src/mod2)
 add_subdirectory(${PROJECT_SOURCE_DIR}/src/file)
 add_subdirectory(${PROJECT_SOURCE_DIR}/libs/spdlog)
 
+
 # Add the executable
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
-
-
 
 
 # Set global include directories (if any shared headers are in include/)
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
 
+# Add TinyXML2
+include_directories(${CMAKE_SOURCE_DIR}/src/tinyxml2)
+add_library(TinyXML2 STATIC ${CMAKE_SOURCE_DIR}/src/tinyxml2/tinyxml2.cpp)
+
+# Find TinyXML2
+# set(CMAKE_PREFIX_PATH ".lib/tinyxml/cmake/" ${CMAKE_PREFIX_PATH})
+# set (TinyXML2_DIR ${PROJECT_SOURCE_DIR}/libs/tinyxml2/cmake)
+
+# find_package(TinyXML2 REQUIRED)
 
 # If libclang headers are not found automatically, specify the include directory
 # For example, if installed in /usr/local/include/clang
@@ -50,9 +58,14 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/mai
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/mod1)
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/mod2)
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/file)
+target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/tinyxml2)
 # target_include_directories(${PROJECT_NAME} PRIVATE )
 target_link_libraries(${PROJECT_NAME} PRIVATE /usr/lib/llvm-14/lib/libclang.so )
 target_link_libraries(${PROJECT_NAME} PRIVATE spdlog::spdlog)
+
+# Link TinyXML2 to the executable
+# target_link_libraries(${PROJECT_NAME} PRIVATE TinyXML2::TinyXML2)
+
 
 # Link libclang to the executable
 target_link_libraries(${PROJECT_NAME} PRIVATE clang)
