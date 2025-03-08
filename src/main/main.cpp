@@ -15,11 +15,11 @@ int main()
 	mod1[0].callPrintMessage();
 	spdlog::info("Welcome to spdlog!");
 	string fileName = "main.cpp";
-	string dirPath = "/mnt/c/D_Drive/workset/EclipseProjects/ArmStm32F091";
-	// std::string dirPath = "/home/khtb/workset/ArmStm32F091/";
+	// string dirPath = "/mnt/c/D_Drive/workset/EclipseProjects/ArmStm32F091";
+	std::string dirPath = "/home/khtb/workset/ArmStm32F091/";
 	// parseFile(fileName);
 	FileScanner scanner(dirPath);
-	std::vector<std::string> ext = {".ld"};
+	std::vector<std::string> ext = {".c", ".h"};
 	x =	scanner.getFiles(ext);
 	spdlog::info("Number of files found: {}", x.size());
 	return 0;

@@ -125,5 +125,6 @@
     "cinttypes": "cpp",
     "typeinfo": "cpp",
     "variant": "cpp"
-  }
+  },
+  "idf.pythonInstallPath": "/usr/bin/python3"
 }
