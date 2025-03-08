@@ -1,20 +1,71 @@
 #include <iostream>
-#include "mod1.h"
-#include "mod2.h"
 #include "FileScanner.h"
 #include "spdlog/spdlog.h"
 #include <algorithm>
-// #include "tinyxml2.h"
 #include "svdParser.h"
-
+#include <cstdlib>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <string>
 using namespace std;
+
+void executeCommand(const std::string &command)
+{
+	if (command == "ping")
+	{
+		std::cout << "pong\n";
+	}
+	else if (command == "pwd")
+	{
+		system("pwd");
+	}
+	else if (command == "ls")
+	{
+		system("ls");
+	}
+	else if (command == "cat")
+	{
+		system("cat /etc/os-release");
+	}
+	else if (command == "exit")
+	{
+		exit(0);
+	}
+	else
+	{
+		std::cout << "Unknown command: " << command << "\n";
+	}
+}
+
+
+std::vector<std::string> commandList = {"ping", "pwd", "ls", "cat", "exit"};
+
+char** commandCompleter(const char* text, int start, int end) {
+    std::vector<std::string> matches;
+
+    for (const auto& cmd : commandList) {
+        if (cmd.find(text) == 0) {  // If the command starts with the entered text
+            matches.push_back(cmd);
+        }
+    }
+
+    // Allocate memory for Readline completion system
+    char** result = nullptr;
+    if (!matches.empty()) {
+        result = (char**)malloc(sizeof(char*) * (matches.size() + 1));
+        for (size_t i = 0; i < matches.size(); ++i) {
+            result[i] = strdup(matches[i].c_str());
+        }
+        result[matches.size()] = nullptr;
+    }
+
+    return result;
+}
 
 int main()
 {
 	cout << "Hello, World!" << std::endl;
 	vector<std::string> x;
-	Mod1 *mod1 = new Mod1[2];
-	mod1[0].callPrintMessage();
 	spdlog::info("Welcome to spdlog!");
 	string fileName = "main.cpp";
 	// string dirPath = "/mnt/c/D_Drive/workset/EclipseProjects/ArmStm32F091";
@@ -22,21 +73,19 @@ int main()
 	// parseFile(fileName);
 	FileScanner scanner(dirPath);
 	std::vector<std::string> ext = {".c", ".h"};
-	x =	scanner.getFiles(ext);
+	x = scanner.getFiles(ext);
 	spdlog::info("Number of files found: {}", x.size());
-	SVDParser parser("dummy_svd_file.svd");	
-	parser.parse();
-	std::vector<Peripheral> peripherals = parser.getPeripherals();
-	for (Peripheral peripheral : peripherals)
+
+	rl_attempted_completion_function = commandCompleter; // Set tab completion function
+	char *input;
+	while ((input = readline("# ")) != nullptr)
 	{
-		spdlog::info("Peripheral name: {}", peripheral.getName());
-		spdlog::info("Peripheral base address: {:#x}", peripheral.getBaseAddress());
-		for ( const Register &reg : peripheral.getRegisters())
+		if (input && *input)
 		{
-			spdlog::info("Register name: {}", reg.getName());
-			spdlog::info("Register address offset: {}", reg.getAddressOffset());
-			spdlog::info("Register size: {}", reg.getSize());
+			add_history(input); // Add input to history
+			executeCommand(input);
 		}
+		free(input); // Free the input buffer
 	}
 	return 0;
 }

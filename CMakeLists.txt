@@ -54,6 +54,8 @@ include_directories(${CMAKE_SOURCE_DIR}/src/svd_parser)
 add_library(svdParser STATIC ${CMAKE_SOURCE_DIR}/src/svd_parser/svdParser.cpp)
 
 
+
+
 # Find TinyXML2
 # set(CMAKE_PREFIX_PATH ".lib/tinyxml/cmake/" ${CMAKE_PREFIX_PATH})
 # set (TinyXML2_DIR ${PROJECT_SOURCE_DIR}/libs/tinyxml2/cmake)
@@ -71,6 +73,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/tin
 # target_include_directories(${PROJECT_NAME} PRIVATE )
 target_link_libraries(${PROJECT_NAME} PRIVATE /usr/lib/llvm-14/lib/libclang.so )
 target_link_libraries(${PROJECT_NAME} PRIVATE spdlog::spdlog)
+target_link_libraries(${PROJECT_NAME} PRIVATE readline)
 
 # Link TinyXML2 to the executable
 # target_link_libraries(${PROJECT_NAME} PRIVATE TinyXML2::TinyXML2)

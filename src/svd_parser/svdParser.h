@@ -21,6 +21,7 @@ private:
     std::vector<Peripheral> peripherals;
     bool parsePeripheral(tinyxml2::XMLElement *element);
     bool parseRegister(tinyxml2::XMLElement *element, Peripheral &peripheral);
+    bool parseField(tinyxml2::XMLElement* element ,Register &reister);
 };
 
 class Peripheral
@@ -43,17 +44,34 @@ public:
 class Register
 {
 public:
-    Register(std::string name, std::string addressOffset, std::string size) : name(name), addressOffset(addressOffset), size(size) {};
+    Register(std::string name, std::string addressOffset, std::string size) : name(name), addressOffset(addressOffset), size(size), fields({})  {};
+    Register(std::string name, std::string addressOffset, std::string size , std::vector<Field> fields) : name(name), addressOffset(addressOffset), size(size), fields(fields)  {};
+
     const std::string &getName() const { return name; };
     const std::string &getAddressOffset() const { return addressOffset; };
     const std::string &getSize() const { return size; };
-    // const std::vector<Field> &getFields() const;
-    // void addField(const Field &field);
+    const std::vector<Field> &getFields() const { return fields; };
+    void addField(const Field &field);
 private:
     std::string name;
     std::string addressOffset;
     std::string size;
-    // std::vector<Field> fields;
+    std::vector<Field> fields;
 };
+
+
+class Field
+{
+public:
+    Field(std::string name, std::string bitOffset, std::string bitWidth) : name(name), bitOffset(bitOffset), bitWidth(bitWidth) {};
+    const std::string &getName() const { return name; };
+    const std::string &getBitOffset() const { return bitOffset; };
+    const std::string &getBitWidth() const { return bitWidth; };
+private:
+    std::string name;
+    std::string bitOffset;
+    std::string bitWidth;
+};
+
 
 #endif
