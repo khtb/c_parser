@@ -21,29 +21,38 @@ file(GLOB_RECURSE PROJECT_SOURCES "${SOURCE_DIR}/*.cpp")
 # set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0") # Enable GDB debugging
 
 # # Recursively find all directories containing header files in 'include' directory
-# file(GLOB_RECURSE HEADER_DIRECTORIES ""${SOURCE_DIR}/*.h"")
+file(GLOB_RECURSE HEADER_DIRECTORIES ""${SOURCE_DIR}/*.h"")
 
 # # Add these directories as include directories
-# include_directories(${HEADER_DIRECTORIES})
+include_directories(${HEADER_DIRECTORIES})
 
-add_subdirectory(${PROJECT_SOURCE_DIR}/src/main)
-add_subdirectory(${PROJECT_SOURCE_DIR}/src/mod1)
-add_subdirectory(${PROJECT_SOURCE_DIR}/src/mod2)
-add_subdirectory(${PROJECT_SOURCE_DIR}/src/file)
-add_subdirectory(${PROJECT_SOURCE_DIR}/libs/spdlog)
+# add_subdirectory(${PROJECT_SOURCE_DIR}/src/main)
+# add_subdirectory(${PROJECT_SOURCE_DIR}/src/mod1)
+# add_subdirectory(${PROJECT_SOURCE_DIR}/src/mod2)
+# add_subdirectory(${PROJECT_SOURCE_DIR}/src/file)
+# add_subdirectory(${PROJECT_SOURCE_DIR}/libs/spdlog)
 
 
 # Add the executable
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
-
+set(CMAKE_PREFIX_PATH "/home/khtb/workset/c_parser/libs/spdlog/build" ${CMAKE_PREFIX_PATH})
+set (spdlog_Dir="/home/khtb/workset/c_parser/libs/spdlog/build")
+find_package(spdlog REQUIRED)
 
 # Set global include directories (if any shared headers are in include/)
 include_directories(${PROJECT_SOURCE_DIR}/include)
+# spdlog
+include_directories(${PROJECT_SOURCE_DIR}/libs/spdlog/include)
 
 
 # Add TinyXML2
 include_directories(${CMAKE_SOURCE_DIR}/src/tinyxml2)
 add_library(TinyXML2 STATIC ${CMAKE_SOURCE_DIR}/src/tinyxml2/tinyxml2.cpp)
+
+
+include_directories(${CMAKE_SOURCE_DIR}/src/svd_parser)
+add_library(svdParser STATIC ${CMAKE_SOURCE_DIR}/src/svd_parser/svdParser.cpp)
+
 
 # Find TinyXML2
 # set(CMAKE_PREFIX_PATH ".lib/tinyxml/cmake/" ${CMAKE_PREFIX_PATH})

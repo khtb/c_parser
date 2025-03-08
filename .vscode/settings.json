@@ -1,4 +1,7 @@
 {
+  "cmake.automaticReconfigure": false,
+  "cmake.configureOnOpen": false,
+  "cmake.configureOnEdit": false,
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
   "C_Cpp_Runner.debuggerPath": "gdb",
@@ -124,7 +127,9 @@
     "thread": "cpp",
     "cinttypes": "cpp",
     "typeinfo": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "list": "cpp",
+    "shared_mutex": "cpp"
   },
   "idf.pythonInstallPath": "/usr/bin/python3"
 }

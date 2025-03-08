@@ -4,7 +4,8 @@
 #include "FileScanner.h"
 #include "spdlog/spdlog.h"
 #include <algorithm>
-#include "tinyxml2.h"
+// #include "tinyxml2.h"
+#include "svdParser.h"
 
 using namespace std;
 
@@ -23,5 +24,19 @@ int main()
 	std::vector<std::string> ext = {".c", ".h"};
 	x =	scanner.getFiles(ext);
 	spdlog::info("Number of files found: {}", x.size());
+	SVDParser parser("dummy_svd_file.svd");	
+	parser.parse();
+	std::vector<Peripheral> peripherals = parser.getPeripherals();
+	for (Peripheral peripheral : peripherals)
+	{
+		spdlog::info("Peripheral name: {}", peripheral.getName());
+		spdlog::info("Peripheral base address: {:#x}", peripheral.getBaseAddress());
+		for ( const Register &reg : peripheral.getRegisters())
+		{
+			spdlog::info("Register name: {}", reg.getName());
+			spdlog::info("Register address offset: {}", reg.getAddressOffset());
+			spdlog::info("Register size: {}", reg.getSize());
+		}
+	}
 	return 0;
 }

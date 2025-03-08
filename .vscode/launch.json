@@ -24,7 +24,7 @@
         }
     ],
     "miDebuggerPath": "/usr/bin/gdb",  
-    "preLaunchTask": "cmake terminal"
+    "preLaunchTask": "CMake: build"
         // "sourceFileMap": {
         // "/path/to/your/source": "${workspaceFolder}"
     // }
