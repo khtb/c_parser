@@ -129,7 +129,8 @@ void Register::addField(const Field &field)
 
 void parseTest(void)
 {
-    SVDParser parser("large_dummy_svd_file.svd");	
+    // SVDParser parser("large_dummy_svd_file.svd");	
+    SVDParser parser("../dummy_svd_file.svd");	
 	parser.parse();
 	std::vector<Peripheral> peripherals = parser.getPeripherals();
 	for (Peripheral peripheral : peripherals)
