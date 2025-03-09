@@ -3,7 +3,7 @@
 // Contents: Miscellaneous functions for the core_cli library
 //
 // This file contains the implementation of the miscellaneous functions for the core_cli library. These functions include utilities for string manipulation and command completion.
-std::string m_trim(const std::string& str)
+std::string str_trim(const std::string& str)
 {
     size_t start = str.find_first_not_of(" \t\n\r\f\v");
     size_t end = str.find_last_not_of(" \t\n\r\f\v");
