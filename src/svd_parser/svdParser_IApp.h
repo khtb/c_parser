@@ -12,6 +12,7 @@ public:
 	void finalize() override;
 	void setName(std::string name) { this->name = name; }
 	std::string getName() const { return name; }
+	void executeCommand(std::string cmd, std::vector<std::string>& args) override;
 
 private:
 	std::string name ;

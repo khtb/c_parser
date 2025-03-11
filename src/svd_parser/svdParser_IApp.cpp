@@ -1,4 +1,5 @@
 #include "svdParser_IApp.h"
+
 #include <iostream>
 
 extern void parseTest(void);
@@ -23,4 +24,12 @@ void svdParser_IApp::run(const std::vector<std::string>& arguments)
 void svdParser_IApp::finalize()
 {
 	std::cout << "Finalizing "<< name << "\n";
+}
+
+void svdParser_IApp::executeCommand(std::string cmd, std::vector<std::string>& args)
+{
+	if (cmd != "")
+	{
+		std::cout << cmd << "args"<< std::endl;
+	}
 }

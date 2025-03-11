@@ -8,12 +8,13 @@
 #include "misc.h"
 
 char **commandCompleter(const char *text, int start, int end);
-// rl_compentry_func_t* commandEntryCompleter;
-char* commandEntryCompleter(char *text, int state);//(char *text, int state);
+char* commandEntryCompleter(const char *text, int state);
 void custom_display_matches(char**, int, int);
-
+static IApplication *currentApp = nullptr;
 std::vector<std::string> crntCommandList;
 const std::vector<std::string> stdCommandList = {"ping", "pwd", "ls", "cat", "exit"};
+
+
 
 void CoreCLI::start()
 {
@@ -54,6 +55,7 @@ void CoreCLI::runApp(IApplication *app, std::vector<std::string> arguments)
 	app->setAppPrompt([this](const std::string &prompt)
 					  { this->AppPropmt(prompt); });
 	app->init();
+	currentApp = app;
 	app->run(arguments);
 	app->finalize();
 	resetCommandList();	
@@ -68,13 +70,11 @@ void CoreCLI::resetCommandList()
 void CoreCLI::initCompletion()
 {
 	// Set the completion function to our command completer
-	// rl_attempted_completion_function = &commandCompleter;
-	rl_completion_entry_function = (rl_compentry_func_t*) &commandEntryCompleter;
-	// rl_completion_display_matches_hook = &custom_display_matches;
+	rl_completion_entry_function = &commandEntryCompleter;
 	crntCommandList = stdCommandList;
 }
 
-char* commandEntryCompleter(char *text, int state)// [](const char *text, int state)
+char* commandEntryCompleter(const char *text, int state)// [](const char *text, int state)
 {
     static int index, length;
     if (state == 0) {
@@ -90,7 +90,7 @@ char* commandEntryCompleter(char *text, int state)// [](const char *text, int st
 		}
 	}
 	return nullptr;
-}
+		}
 
 void CoreCLI::registerCommand(const std::string &command)
 {
@@ -142,7 +142,26 @@ char **commandCompleter(const char *text, int start, int end)
 void CoreCLI::executeCommand(const std::string &command)
 {
 	std::string cmd = str_trim(command);
-	if (cmd == "ping")
+	size_t spaceIndex = cmd.find(" ");
+	std::string cmdName = cmd.substr(0, spaceIndex);
+	std::string cmdArgs = cmd.substr(spaceIndex + 1);
+	std::vector<std::string> cmdArgsList;
+	if (!cmdArgs.empty())
+	{
+		cmdArgsList.push_back(cmdArgs);
+	}
+	if (cmd == "svd")	
+	{
+		std::vector<std::string> args = {"arg1", "arg2"};
+		svdParser_IApp appx;
+		appx.setName("svdParser");
+		runApp(&appx, args);
+	}
+	else if (cmd == "exit")
+	{
+		exit(0);
+	}
+	else if (cmd == "ping")
 	{
 		std::cout << "pong\n";
 	}
@@ -154,37 +173,22 @@ void CoreCLI::executeCommand(const std::string &command)
 	{
 		system("ls");
 	}
-	else if (cmd == "echo")
+	else
+	if (currentApp)
 	{
-		system("echo Hello World");
-	}
-	else if (cmd == "app1")
-	{
-		std::vector<std::string> args = {"arg1", "arg2"};
-		mainApp appx("app1");
-		runApp(&appx, args);
-	}
-	else if (cmd == "svd")
-	{
-		std::vector<std::string> args = {"arg1", "arg2"};
-		svdParser_IApp appx;
-		appx.setName("svdParser");
-		runApp(&appx, args);
-	}
-	else if (cmd =="help")
-	{
-		std::cout << "Available commands: \n";
-		for (const auto &cmd : crntCommandList)
+		// if constexpr (std::is_base_of<IApplication, currentApp>::value)
+		if (currentApp && dynamic_cast<IApplication *>(currentApp))
 		{
-			std::cout << cmd << "\n";
+			std::cout << "Running registered app\n";
+			currentApp->executeCommand(cmd, cmdArgsList);
 		}
-	}
-	else if (cmd == "exit")
-	{
-		exit(0);
+		else
+		{
+			std::cout << "No registered app to handle command." << std::endl;
+		}
 	}
 	else
 	{
-		std::cout << "Unknown command: " << command << "\n";
+		std::cout << "No application running to handle command." << std::endl;
 	}
 }
