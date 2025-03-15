@@ -74,13 +74,14 @@ void CoreCLI::initCompletion()
 	crntCommandList = stdCommandList;
 }
 
-char* commandEntryCompleter(const char *text, int state)// [](const char *text, int state)
+char *commandEntryCompleter(const char *text, int state) // [](const char *text, int state)
 {
-    static int index, length;
-    if (state == 0) {
-        index = 0;
-        length = strlen(text);
-    }
+	static int index, length;
+	if (state == 0)
+	{
+		index = 0;
+		length = strlen(text);
+	}
 	while (index < crntCommandList.size())
 	{
 		const std::string cmd = crntCommandList[index++];
@@ -90,7 +91,7 @@ char* commandEntryCompleter(const char *text, int state)// [](const char *text, 
 		}
 	}
 	return nullptr;
-		}
+}
 
 void CoreCLI::registerCommand(const std::string &command)
 {
@@ -155,8 +156,7 @@ void CoreCLI::executeCommand(const std::string &command)
 	if (cmd == "svd")	
 	{
 		std::vector<std::string> args = {"arg1", "arg2"};
-		svdParser_IApp appx;
-		appx.setName("svdParser");
+		svdParser_IApp appx("svdParser");	
 		runApp(&appx, args);
 	}
 	else if (cmd == "exit")
@@ -181,7 +181,7 @@ void CoreCLI::executeCommand(const std::string &command)
 		// if constexpr (std::is_base_of<IApplication, currentApp>::value)
 		if (currentApp && dynamic_cast<IApplication *>(currentApp))
 		{
-			std::cout << "Running registered app\n";
+			std::cout << "Running registered app " << currentApp->getName() << std::endl;
 			currentApp->executeCommand(cmd, cmdArgsList);
 		}
 		else

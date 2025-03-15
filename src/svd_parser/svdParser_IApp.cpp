@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-
+//commands for svdParser_IApp
 class cmdParser : public command
 {
 public:
@@ -27,29 +27,27 @@ public:
 cmdParser cmdParse = cmdParser();
 cmdGetName cmdgname = cmdGetName();
 
-std::array<command*,2> commands = {&cmdParse, &cmdgname};
-
-
 void svdParser_IApp::init()
 {
-	std::cout << "Initializing svdParser_IApp\n";
-
-	initCommands();
+	std::cout << "Initializing "<< this->name << std::endl;
+	this->commands = {&cmdParse, &cmdgname};
+	this->initCommands();
 }
 
+
+//test override
 void svdParser_IApp::initCommands()
 {
-	for (auto cmd : commands)
+	for (auto cmd : this->commands)
 	{
 		commandRegistrar(cmd->getName());
-		cmd->execute();
 	}
 }
 
 void svdParser_IApp::run(const std::vector<std::string>& arguments)
 {
-	std::cout << "Running "<< name << "\n";
-	appPrompt(name);
+	std::cout << "Running "<< this->name << "\n";
+	appPrompt(this->name);
 
 }
 
@@ -57,19 +55,6 @@ void svdParser_IApp::run(const std::vector<std::string>& arguments)
 void svdParser_IApp::finalize()
 {
 	std::cout << "Finalizing "<< name << "\n";
-}
-
-void svdParser_IApp::executeCommand(std::string cmd, std::vector<std::string>& args)
-{
-	// search for cmd string in commands list if avail 
-	// execute the command
-	for (auto command : commands)
-	{
-		if (command->getName() == cmd)
-		{
-			command->execute();
-		}
-	}
 }
 
 
