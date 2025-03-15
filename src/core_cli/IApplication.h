@@ -22,12 +22,6 @@ public:
 	virtual void finalize() = 0;
 	virtual std::string getName() const = 0;
 	virtual void executeCommand(std::string cmd, std::vector<std::string>& args) = 0;
-	// {
-	// 	if (cmd != "")
-	// 	{
-	// 		std::cout << cmd << "args"<< std::endl;
-	// 	}
-	// }
 
 protected:
 	std::vector<std::string> arguments = {"get_name"};

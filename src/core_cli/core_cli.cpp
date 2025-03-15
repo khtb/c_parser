@@ -96,6 +96,8 @@ void CoreCLI::registerCommand(const std::string &command)
 {
 	crntCommandList.push_back(command);
 }
+
+
 void custom_display_matches(char**x , int y , int z)
 {
  	std::cout <<"avaialbe commands : "<< crntCommandList.size() << std::endl;
@@ -159,7 +161,7 @@ void CoreCLI::executeCommand(const std::string &command)
 	}
 	else if (cmd == "exit")
 	{
-		exit(0);
+		exit(0)cout;
 	}
 	else if (cmd == "ping")
 	{
