@@ -161,7 +161,7 @@ void CoreCLI::executeCommand(const std::string &command)
 	}
 	else if (cmd == "exit")
 	{
-		exit(0)cout;
+		exit(0);
 	}
 	else if (cmd == "ping")
 	{

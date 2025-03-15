@@ -8,6 +8,7 @@
 // #include <readline/history.h>
 #include <string>
 #include "core_cli.h"
+#include "ICmd.h"
 using namespace std;
 
 // void executeCommand(const std::string &command)
@@ -90,5 +91,20 @@ int main()
 	// }
 	CoreCLI cli;
 	cli.start();
+	// ICmd icmdobj("icmd");
+	// cout << icmdobj.getName() << endl;
+	// Cmd_basic cmdBasic("cmdBasic");
+	// cout << cmdBasic.getName() << endl;
+	// cmdBasic.execute();
+	// cmd_parse cmdParse("cmdParse");
+	// cout << cmdParse.getName() << endl;
+	// cmdParse.execute();
+	// std::vector<ICmd*> commands;
+	// commands.push_back(&cmdBasic);
+	// commands.push_back(&cmdParse);
+	// commands[0]->execute();  cvv  c 
+	// commands[1]->execute();
+
+
 	return 0;
 }

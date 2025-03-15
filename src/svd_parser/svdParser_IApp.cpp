@@ -2,30 +2,53 @@
 #include "ICmd.h"
 #include <iostream>
 
-extern void parseTest(void);
-CMDParse svdParser_IApp::cmdParse;
-CMDGetName svdParser_IApp::cmdGetName;
-static std::vector<ICmd*> commands;
+
+
+class cmdParser : public command
+{
+public:
+	cmdParser() : command("parser") {}
+	void execute() override
+	{
+		std::cout << "Executing parse command\n";
+	}
+};
+
+class cmdGetName : public command
+{
+public:
+	cmdGetName() : command("khtb") {}
+	void execute() override
+	{
+		std::cout << "Executing get_name command\n";
+	}
+};
+
+cmdParser cmdParse = cmdParser();
+cmdGetName cmdgname = cmdGetName();
+
+std::array<command*,2> commands = {&cmdParse, &cmdgname};
+
 
 void svdParser_IApp::init()
 {
 	std::cout << "Initializing svdParser_IApp\n";
-	commandRegistrar("parse");
-	commandRegistrar("get_name");
+
 	initCommands();
 }
 
 void svdParser_IApp::initCommands()
 {
-	commands.push_back(&cmdParse);
-	commands.push_back(&cmdGetName);
+	for (auto cmd : commands)
+	{
+		commandRegistrar(cmd->getName());
+		cmd->execute();
+	}
 }
 
 void svdParser_IApp::run(const std::vector<std::string>& arguments)
 {
 	std::cout << "Running "<< name << "\n";
-	commands[0]->execute();
-	parseTest();
 	appPrompt(name);
 
 }
@@ -38,15 +61,15 @@ void svdParser_IApp::finalize()
 
 void svdParser_IApp::executeCommand(std::string cmd, std::vector<std::string>& args)
 {
-	if (cmd != "")
+	// search for cmd string in commands list if avail 
+	// execute the command
+	for (auto command : commands)
 	{
-		std::cout << cmd << "args"<< std::endl;
+		if (command->getName() == cmd)
+		{
+			command->execute();
+		}
 	}
 }
 
-
-
-// const CMDParse svdParser_IApp::cmdParse;
-// const CMDGetName svdParser_IApp::cmdGetName;
-// const std::vector<ICmd*> svdParser_IApp::commands = { &svdParser_IApp::cmdParse, &svdParser_IApp::cmdGetName };
 
