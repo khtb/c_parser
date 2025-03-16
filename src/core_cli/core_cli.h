@@ -19,9 +19,9 @@ public:
 
 
 private:
+	std::vector<std::string> availabeApps;
 	void initCompletion();
-	// IApplication* currentApp;
 	void executeCommand(const std::string &command);
 	void resetCommandList();
-
+	void runPromptLoop(const std::string &prompt);
 };

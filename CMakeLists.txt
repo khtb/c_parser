@@ -40,6 +40,9 @@ set(CMAKE_PREFIX_PATH "/home/khtb/workset/c_parser/libs/spdlog/build" ${CMAKE_PR
 set (spdlog_Dir="/home/khtb/workset/c_parser/libs/spdlog/build")
 find_package(spdlog REQUIRED)
 
+
+add_subdirectory(${PROJECT_SOURCE_DIR}/libs/string_util)
+
 # Set global include directories (if any shared headers are in include/)
 include_directories(
     ${HEADER_DIRS}
@@ -62,11 +65,12 @@ target_include_directories(
     )
 
 
-
+include_directories(${PROJECT_SOURCE_DIR}/libs/string_util)
 
 # Link libclang to the executable
 target_link_libraries(${PROJECT_NAME} PRIVATE clang)
 target_link_libraries(${PROJECT_NAME} PRIVATE /usr/lib/llvm-14/lib/libclang.so )
 target_link_libraries(${PROJECT_NAME} PRIVATE spdlog::spdlog)
+target_link_libraries(${PROJECT_NAME} PRIVATE string_util)
 target_link_libraries(${PROJECT_NAME} PRIVATE readline)
 

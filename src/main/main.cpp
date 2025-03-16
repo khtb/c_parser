@@ -4,65 +4,15 @@
 #include <algorithm>
 #include "svdParser.h"
 #include <cstdlib>
-// #include <readline/readline.h>
-// #include <readline/history.h>
 #include <string>
 #include "core_cli.h"
 #include "ICmd.h"
+#include "string_util.h"
 using namespace std;
 
-// void executeCommand(const std::string &command)
-// {
-// 	if (command == "ping")
-// 	{
-// 		std::cout << "pong\n";
-// 	}
-// 	else if (command == "pwd")
-// 	{
-// 		system("pwd");
-// 	}
-// 	else if (command == "ls")
-// 	{
-// 		system("ls");
-// 	}
-// 	else if (command == "cat")
-// 	{
-// 		system("cat /etc/os-release");
-// 	}
-// 	else if (command == "exit")
-// 	{
-// 		exit(0);
-// 	}
-// 	else
-// 	{
-// 		std::cout << "Unknown command: " << command << "\n";
-// 	}
-// }
 
 
-// std::vector<std::string> commandList = {"ping", "pwd", "ls", "cat", "exit"};
 
-// char** commandCompleter(const char* text, int start, int end) {
-//     std::vector<std::string> matches;
-
-//     for (const auto& cmd : commandList) {
-//         if (cmd.find(text) == 0) {  // If the command starts with the entered text
-//             matches.push_back(cmd);
-//         }
-//     }
-
-//     // Allocate memory for Readline completion system
-//     char** result = nullptr;
-//     if (!matches.empty()) {
-//         result = (char**)malloc(sizeof(char*) * (matches.size() + 1));
-//         for (size_t i = 0; i < matches.size(); ++i) {
-//             result[i] = strdup(matches[i].c_str());
-//         }
-//         result[matches.size()] = nullptr;
-//     }
-
-//     return result;
-// }
 
 int main()
 {
@@ -78,33 +28,11 @@ int main()
 	x = scanner.getFiles(ext);
 	spdlog::info("Number of files found: {}", x.size());
 
-	// rl_attempted_completion_function = commandCompleter; // Set tab completion function
-	// char *input;
-	// while ((input = readline("# ")) != nullptr)
-	// {
-	// 	if (input && *input)
-	// 	{
-	// 		add_history(input); // Add input to history
-	// 		executeCommand(input);
-	// 	}
-	// 	free(input); // Free the input buffer
-	// }
 	CoreCLI cli;
 	cli.start();
-	// ICmd icmdobj("icmd");
-	// cout << icmdobj.getName() << endl;
-	// Cmd_basic cmdBasic("cmdBasic");
-	// cout << cmdBasic.getName() << endl;
-	// cmdBasic.execute();
-	// cmd_parse cmdParse("cmdParse");
-	// cout << cmdParse.getName() << endl;
-	// cmdParse.execute();
-	// std::vector<ICmd*> commands;
-	// commands.push_back(&cmdBasic);
-	// commands.push_back(&cmdParse);
-	// commands[0]->execute();  cvv  c 
-	// commands[1]->execute();
-
-
 	return 0;
-}
+
+}	
+
+
+

@@ -20,3 +20,13 @@ public:
 private:
 	std::string name;
 };
+
+
+class SysCmd : public command
+{
+public:
+	SysCmd(const std::string& name) : command(name) {}
+	void execute() {
+		system(getName().c_str());
+	}
+};

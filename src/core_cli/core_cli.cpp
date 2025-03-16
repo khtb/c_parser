@@ -3,25 +3,26 @@
 #include <cstdlib>
 #include <readline/readline.h>
 #include <readline/history.h>
-
+#include <memory>
+#include <vector>
+#include <algorithm>
 #include "regdApp.h"
 #include "misc.h"
 
 char **commandCompleter(const char *text, int start, int end);
-char* commandEntryCompleter(const char *text, int state);
-void custom_display_matches(char**, int, int);
+char *commandEntryCompleter(const char *text, int state);
+void custom_display_matches(char **, int, int);
 static IApplication *currentApp = nullptr;
 std::vector<std::string> crntCommandList;
 const std::vector<std::string> stdCommandList = {"ping", "pwd", "ls", "cat", "exit"};
 
+std::vector<std::unique_ptr<IApplication>> apps;
 
-
-void CoreCLI::start()
+void CoreCLI::runPromptLoop(const std::string &prompt)
 {
-	initCompletion();
-	std::string prompt = "#";
+	std::string full_prompt = prompt + "#";
 	std::string command;
-	while ((command = readline(prompt.c_str())) != "exit")
+	while ((command = readline(full_prompt.c_str())) != "exit")
 	{
 		if (command.empty())
 		{
@@ -32,19 +33,20 @@ void CoreCLI::start()
 	}
 }
 
+void CoreCLI::start()
+{
+	initCompletion();
+	apps.push_back(std::unique_ptr<IApplication>(new svdParser_IApp("svd")));
+	apps.push_back(std::unique_ptr<IApplication>(new mainApp("main")));
+	std::string prompt = "#";
+	runPromptLoop(prompt);
+}
+
 void CoreCLI::AppPropmt(const std::string &prompt)
 {
 	std::string app_prompt = prompt + "#";
 	std::string command;
-	while ((command = readline(app_prompt.c_str())) != "exit")
-	{
-		if (command.empty())
-		{
-			continue;
-		}
-		add_history(command.c_str());
-		executeCommand(command);
-	}
+	runPromptLoop(prompt);
 }
 
 void CoreCLI::runApp(IApplication *app, std::vector<std::string> arguments)
@@ -54,13 +56,12 @@ void CoreCLI::runApp(IApplication *app, std::vector<std::string> arguments)
 							 { this->registerCommand(command); });
 	app->setAppPrompt([this](const std::string &prompt)
 					  { this->AppPropmt(prompt); });
-	app->init();
 	currentApp = app;
+	app->init();
 	app->run(arguments);
 	app->finalize();
-	resetCommandList();	
+	resetCommandList();
 }
-
 
 void CoreCLI::resetCommandList()
 {
@@ -98,10 +99,9 @@ void CoreCLI::registerCommand(const std::string &command)
 	crntCommandList.push_back(command);
 }
 
-
-void custom_display_matches(char**x , int y , int z)
+void custom_display_matches(char **x, int y, int z)
 {
- 	std::cout <<"avaialbe commands : "<< crntCommandList.size() << std::endl;
+	std::cout << "avaialbe commands : " << crntCommandList.size() << std::endl;
 	for (const auto &cmd : crntCommandList)
 	{
 		std::cout << cmd << "\n";
@@ -153,30 +153,33 @@ void CoreCLI::executeCommand(const std::string &command)
 	{
 		cmdArgsList.push_back(cmdArgs);
 	}
-	if (cmd == "svd")	
+	for (const auto &app : apps)
 	{
-		std::vector<std::string> args = {"arg1", "arg2"};
-		svdParser_IApp appx("svdParser");	
-		runApp(&appx, args);
+		if (app->getName() == cmdName)
+		{
+			// std::vector<std::string> args = {"arg1", "arg2"};
+			runApp(app.get(), cmdArgsList);
+		}
+	}
+	if (cmd == "help")
+	{
+		std::cout << "Available Apps: " << std::endl;
+		for (const auto &app : apps)
+		{
+			std::cout << app->getName() << std::endl;
+		}
+		std::cout << "=================== " << std::endl;
+		std::cout << "Available commands: " << std::endl;
+		for (const auto &cmd : crntCommandList)
+		{
+			std::cout << cmd << std::endl;
+		}
 	}
 	else if (cmd == "exit")
 	{
-		exit(0);
+		exit(1);
 	}
-	else if (cmd == "ping")
-	{
-		std::cout << "pong\n";
-	}
-	else if (cmd == "pwd")
-	{
-		system("pwd");
-	}
-	else if (cmd == "ls")
-	{
-		system("ls");
-	}
-	else
-	if (currentApp)
+	else if (currentApp)
 	{
 		// if constexpr (std::is_base_of<IApplication, currentApp>::value)
 		if (currentApp && dynamic_cast<IApplication *>(currentApp))

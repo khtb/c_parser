@@ -1,11 +1,31 @@
 #include "mainApp.h"
 #include <iostream>
 
+// available commands for mainApp
+class CmdPing : public command
+{
+public:
+	CmdPing() : command("ping") {}
+	void execute() override
+	{
+		std::cout << "poing " << std::endl;
+	}
+};
+
+SysCmd cmdPwd = SysCmd("pwd");
+SysCmd cmdLs = SysCmd("ls");
+SysCmd cmddate = SysCmd("date");
+CmdPing cmdPing = CmdPing();
+
+
+
 
 
 void mainApp::init()
 {
-	std::cout << "Initializing mainApp\n";
+	this->commands = {&cmdPwd, &cmdLs, &cmdPing, &cmddate};
+	std::cout << "Initializing "<< this->name << std::endl;
+	this->initCommands();
 }
 
 void mainApp::run(const std::vector<std::string>& arguments)
@@ -15,6 +35,8 @@ void mainApp::run(const std::vector<std::string>& arguments)
 	{
 		std::cout << "Arguments" << arg << "\n";
 	}
+	appPrompt(this->name);
+
 }
 
 

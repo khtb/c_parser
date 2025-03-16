@@ -28,12 +28,19 @@ public:
 	{
 		// search for cmd string in commands list if avail
 		// execute the command
+		bool found = false;
 		for (auto command : commands)
 		{
 			if (command->getName() == cmd)
 			{
 				command->execute();
+				found = true;
+				break;
 			}
+		}
+		if (!found)
+		{
+			std::cout << "Command not found: " << cmd << std::endl;
 		}
 	}
 
