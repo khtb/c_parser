@@ -1,5 +1,5 @@
 // mod2.cpp
-
+#if 0
 #include <clang-c/Index.h>
 #include <iostream>
 #include <string>
@@ -35,3 +35,4 @@ void parseFile(const std::string& fileName) {
     clang_disposeTranslationUnit(unit);
     clang_disposeIndex(index);
 }
+#endif

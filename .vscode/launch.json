@@ -1,5 +1,25 @@
 {
   "configurations": [
+    {
+      "name": "(lldb) Launch",
+      "type": "cppdbg",
+      "request": "launch",
+      "program":  "${workspaceFolder}/build/ParseCFile",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${fileDirname}",
+      "environment": [],
+      "externalConsole": true,
+      "MIMode": "lldb"
+    },
+    {
+      "name": "(lldb) Attach",
+      "type": "cppdbg",
+      "request": "attach",
+      "program":  "${workspaceFolder}/build/ParseCFile",
+      "MIMode": "lldb"
+    },
+
   {
     "name": "(gdb) Launch",
     "type": "cppdbg",
@@ -28,6 +48,7 @@
         // "sourceFileMap": {
         // "/path/to/your/source": "${workspaceFolder}"
     // }
-  }
+  },
+
   ]
 }

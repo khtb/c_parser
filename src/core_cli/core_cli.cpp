@@ -10,7 +10,7 @@
 #include "misc.h"
 
 char **commandCompleter(const char *text, int start, int end);
-char *commandEntryCompleter(const char *text, int state);
+int commandEntryCompleter(const char *text, int state);
 void custom_display_matches(char **, int, int);
 static IApplication *currentApp = nullptr;
 std::vector<std::string> crntCommandList;
@@ -75,7 +75,7 @@ void CoreCLI::initCompletion()
 	crntCommandList = stdCommandList;
 }
 
-char *commandEntryCompleter(const char *text, int state) // [](const char *text, int state)
+int commandEntryCompleter(const char *text, int state) // [](const char *text, int state)
 {
 	static int index, length;
 	if (state == 0)
@@ -88,10 +88,12 @@ char *commandEntryCompleter(const char *text, int state) // [](const char *text,
 		const std::string cmd = crntCommandList[index++];
 		if (cmd.find(text) == 0)
 		{
-			return strdup(cmd.c_str());
+			// return strdup(cmd.c_str());
+			// rl_completion_suppress_append = 0;
+			return 1;
 		}
 	}
-	return nullptr;
+	return 0;
 }
 
 void CoreCLI::registerCommand(const std::string &command)

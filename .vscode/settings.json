@@ -132,5 +132,6 @@
     "shared_mutex": "cpp",
     "misc.h": "c"
   },
-  "idf.pythonInstallPath": "/usr/bin/python3"
+  "idf.pythonInstallPath": "/usr/bin/python3",
+  "window.zoomLevel": -0.5,
 }
